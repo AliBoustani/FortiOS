@@ -76,9 +76,9 @@ try:
         for k in range(4, maxcols+1):  #Considering the specified ports start at column 4 !
             if dic1[k] != 'None':
                 fg_vip_conf(dic1[1], dic1[2], dic1[3], dic1[k])
-            print("\n *** VIP & VIP Group have created for: " +dic1[1])
+        print("\n *** VIP & VIP Group have been created for: " +dic1[1])
 
-        break
+       #break
 
 
     #Terminate the SSH connection
