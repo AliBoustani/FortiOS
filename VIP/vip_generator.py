@@ -19,6 +19,11 @@ except ImportError:
     sys.exit()
 
 
+from netmiko.ssh_exception import NetMikoTimeoutException
+from netmiko.ssh_exception import AuthenticationException
+from paramiko.ssh_exception import SSHException
+
+
 
 try:
     #Specify your excel document! This is my test sample
@@ -64,9 +69,25 @@ try:
 
 
 
-
     #Establishing SSH connection
-    net_connect = ConnectHandler(**My_fortigate)
+    try:
+        net_connect = ConnectHandler(**My_fortigate)
+    except (AuthenticationException):
+        print "\n*** Authentication failure!! Please check your credentials!! \n\n"
+        sys.exit()
+
+
+    except (NetMikoTimeoutException):
+        print "\n*** Time out to connect to Fortigate !! Please Check your device reachability\n\n "
+        sys.exit()
+
+    except (SSHException):
+        print "\n*** SSH problem!! Please check SSH service on Fortigate!! \n\n"
+        sys.exit()
+
+    except Exception as unknown_error:
+        print "\n*** Some Other Error !!! : " + unknown_error
+        sys.exit()
 
 
     #Applying th function for each column in each row
